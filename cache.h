@@ -13,9 +13,12 @@ el tag, el bit V y la información necesaria para implementar la polı́tica de
 reemplazo FIFO.*/
 
 typedef struct Cache{
+	unsigned char* memoria_principal;
 	conjunto_t conjuntos[VIAS];
 } cache_t;
 
+
+void cache_crear(cache_t* c, char* memoria);
 /*
 Inicializa la memoria principal simulada en
 0, los bloques de la caché como inválidos y la tasa de misses a 0.

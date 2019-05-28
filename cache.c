@@ -1,4 +1,7 @@
 #include "cache.h"
+#include <stdlib.h>
+
+#define CONJUNTOS 8
 
 #define MAX_OFFSET 63
 #define MAX_IDX 7
@@ -9,6 +12,13 @@
              ^               ^           ^
 		  7 bits          3 bits       6 bits
 */
+
+void cache_crear(cache_t* c, char* memoria){
+	c->memoria_principal = memoria;
+	for (int i = 0; i < CONJUNTOS; ++i){
+		conjunto_crear((c->conjuntos + i));
+	} 
+}
 
 void init(cache_t* c){
 }

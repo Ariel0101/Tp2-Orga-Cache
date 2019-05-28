@@ -3,9 +3,17 @@
 #include <stdbool.h>
 
 typedef struct Bloque{
-	char espacio[64];
+	unsigned char* espacio;
 	unsigned int tag;
 	bool valido;
 } bloque_t;
+
+
+void bloque_crear(bloque_t* b);
+
+void bloque_leer(bloque_t* b, unsigned int address, unsigned char* memoria);
+
+void bloque_escribir(bloque_t* b, unsigned int address, unsigned char* memoria);
+
 
 #endif //BLOQUE_H
