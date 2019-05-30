@@ -5,7 +5,7 @@
 #define VIAS 4
 /*La memoria a simular es una cache asociativa por conjuntos de cuatro
 vı́as, de 2KB de capacidad, bloques de 64 bytes, polı́tica de reemplazo FIFO
-y polı́tica de escritura WT/¬WA. Se asume que el espacio de direcciones esde 16 bits,
+y polı́tica de escritura WT/¬WA. Se asume que el espacio de direcciones es de 16 bits,
 y hay entonces una memoria principal a simular con un tamaño de
 64KB. Estas memorias pueden ser implementadas como variables globales.
 Cada bloque de la memoria caché deberá contar con su metadata, incluyendo
@@ -53,7 +53,7 @@ void read_tocache(cache_t* c, unsigned int blocknum, unsigned int way, unsigned 
 void write_tocache(cache_t* c, unsigned int address, unsigned char value);
 
 /*
-La función read byte(unsigned int address) debe buscar el valor
+La función read byte (unsigned int address) debe buscar el valor
 del byte correspondiente a la posición address en la caché; si éste no
 se encuentra en la caché debe cargar ese bloque. El valor de retorno
 siempre debe ser el valor del byte almacenado en la dirección indicada.
@@ -70,7 +70,7 @@ el valor solamente en la memoria.
 void write_byte(cache_t* c, unsigned int address, unsigned char value);
 
 /*
-2La función get miss rate() debe devolver el porcentaje de misses
+La función get miss rate() debe devolver el porcentaje de misses
 desde que se inicializó la caché.
 */
 float get_miss_rate(cache_t* c);

@@ -6,6 +6,7 @@ typedef struct Bloque{
 	unsigned char* espacio;
 	unsigned int tag;
 	bool valido;
+	int orden;
 } bloque_t;
 
 

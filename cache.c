@@ -32,15 +32,20 @@ unsigned int find_set(cache_t* c, unsigned int address){
 }
 
 unsigned int select_oldest(cache_t* c, unsigned int setnum){
+	return conjunto_mas_viejo(c->conjuntos + setnum);
 }
 
 void read_tocache(cache_t* c, unsigned int blocknum, unsigned int way, unsigned int set){
+	conjunto_leer(c->conjuntos + set, c->memoria, way, blocknum);
 }
 
 void write_tocache(cache_t* c, unsigned int address, unsigned char value){
 }
 
 unsigned char read_byte(cache_t* c, unsigned int address){
+	unsigned int via = find_set(c, address);
+	unsigned int off = get_offset(c, address);
+	return conjunto_leer_byte(c->conjuntos + via, address, off);
 }
 
 void write_byte(cache_t* c, unsigned int address, unsigned char value){

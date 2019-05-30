@@ -6,40 +6,13 @@ Compilar: gcc -o tp cache.c main.c bloque.c conjunto.c
 */
 int main(){
 	unsigned char memoria[64 * 2];
-	char* pruebas = "EXITO";
-	//Prueba get offset
-	unsigned int off;
-	for (unsigned int prueba = 0; prueba != 2048; prueba++){
-		off = get_offset(&cache, prueba);
-		if (off != (prueba % 64)){
-			pruebas = "ERROR";
-		}
+	for (int i = 0; i < 64 * 2; ++i){
+		memoria[i] = 'a';
 	}
+	conjunto_t conj;
+	conjunto_crear(&conj);
 
-	printf("Prueba get offset: %s\n", pruebas);
-
-	//Prueba find_set
-	
-	unsigned int idx;
-	for (unsigned int prueba = 0; prueba < 64; prueba++){
-		idx = find_set(&cache, prueba);
-		if (idx != 0){
-			pruebas = "ERROR";
-		}
-	}
-	for (unsigned int prueba = 64; prueba < 2*64; prueba++){
-		idx = find_set(&cache, prueba);
-		if (idx != 1){
-			pruebas = "ERROR";
-		}
-	}
-	for (unsigned int prueba = 2*64; prueba < 3*64; prueba++){
-		idx = find_set(&cache, prueba);
-		if (idx != 2){
-			pruebas = "ERROR";
-		}
-	}
-
-	printf("Prueba find set: %s\n", pruebas);
+	conjunto_leer(&conj, 0, memoria);
+	printf("%s\n", conj.bloques[0].espacio);
 	return 0;
 }
