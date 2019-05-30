@@ -36,7 +36,7 @@ unsigned int select_oldest(cache_t* c, unsigned int setnum){
 }
 
 void read_tocache(cache_t* c, unsigned int blocknum, unsigned int way, unsigned int set){
-	conjunto_leer(c->conjuntos + set, c->memoria, way, blocknum);
+	conjunto_leer(c->conjuntos + set, c->memoria_principal, way, blocknum);
 }
 
 void write_tocache(cache_t* c, unsigned int address, unsigned char value){
@@ -45,7 +45,7 @@ void write_tocache(cache_t* c, unsigned int address, unsigned char value){
 unsigned char read_byte(cache_t* c, unsigned int address){
 	unsigned int via = find_set(c, address);
 	unsigned int off = get_offset(c, address);
-	return conjunto_leer_byte(c->conjuntos + via, address, off);
+	return conjunto_leer_byte(c->conjuntos + via, c->memoria_principal, address, off);
 }
 
 void write_byte(cache_t* c, unsigned int address, unsigned char value){

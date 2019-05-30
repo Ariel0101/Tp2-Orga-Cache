@@ -2,7 +2,7 @@
 #define CACHE_H
 #include "conjunto.h"
 
-#define VIAS 4
+#define CONJUNTOS 8
 /*La memoria a simular es una cache asociativa por conjuntos de cuatro
 vı́as, de 2KB de capacidad, bloques de 64 bytes, polı́tica de reemplazo FIFO
 y polı́tica de escritura WT/¬WA. Se asume que el espacio de direcciones es de 16 bits,
@@ -14,7 +14,7 @@ reemplazo FIFO.*/
 
 typedef struct Cache{
 	unsigned char* memoria_principal;
-	conjunto_t conjuntos[VIAS];
+	conjunto_t conjuntos[CONJUNTOS];
 } cache_t;
 
 
