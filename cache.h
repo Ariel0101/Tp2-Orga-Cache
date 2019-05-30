@@ -14,7 +14,10 @@ reemplazo FIFO.*/
 
 typedef struct Cache{
 	unsigned char* memoria_principal;
-	conjunto_t conjuntos[CONJUNTOS];
+	unsigned int accesos;
+	unsigned int misses;
+	bloque_t** conjuntos;
+	int* contadores;
 } cache_t;
 
 
@@ -74,6 +77,8 @@ La función get miss rate() debe devolver el porcentaje de misses
 desde que se inicializó la caché.
 */
 float get_miss_rate(cache_t* c);
+
+void cache_destruir(cache_t* c);
 
 #endif //CACHE_H
 
