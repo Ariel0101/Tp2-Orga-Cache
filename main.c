@@ -10,7 +10,7 @@
 #define E_DIREC "Direccion fuera de rango\n"
 
 /*
-Compilar: gcc -pedantic -Werror -ggdb -o tp cache.c main.c bloque.c conjunto.c
+Compilar: gcc -pedantic -Werror -ggdb -o tp cache.c main.c bloque.c
 */
 int main(int argc, char** argv){
 //=====================Iniciar Cache=====================
