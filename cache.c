@@ -17,7 +17,7 @@
              ^               ^           ^
 		  7 bits          3 bits       6 bits
 */
-void cache_crear(cache_t* c, char* memoria){
+void cache_crear(cache_t* c, unsigned char* memoria){
 	c->memoria_principal = memoria;
 	c->accesos = 0;
 	c->misses = 0;
@@ -120,9 +120,9 @@ void write_byte(cache_t* c, unsigned int address, unsigned char value){
 	c->misses++;
 	c->memoria_principal[address] = value;
 }
-
+#include <stdio.h>
 float get_miss_rate(cache_t* c){
-	return (c->misses / c->accesos);
+	return ((float)c->misses / (float)c->accesos);
 }
 
 void cache_destruir(cache_t* c){

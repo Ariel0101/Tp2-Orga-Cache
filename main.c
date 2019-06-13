@@ -1,52 +1,64 @@
 #include "cache.h"
 #include <stdio.h>
+#include <string.h>
+
+#define MAX_CHAR 255
+#define _64KB 65536
+#define MAX_COMANDO 10
+#define E_VALOR "Valor fuera de rango\n"
+#define E_COMANDO "Comando erroneo\n"
+#define E_DIREC "Direccion fuera de rango\n"
 
 /*
-Compilar: gcc -o tp cache.c main.c bloque.c conjunto.c
+Compilar: gcc -pedantic -Werror -ggdb -o tp cache.c main.c bloque.c conjunto.c
 */
-int main(){
-	unsigned char memoria[65536];
-	int i = 0;
-	for (; i < 65536; ++i){
-		*(memoria + i) = 'A';
-	}
-
-	*(memoria + 15 + 64) = 0x21; //!
-	*(memoria + 520 + 64) = 0x28; //(
-	*(memoria + 1025 + 64) = 0x2B; //+
-	*(memoria + 1541 + 64) = 0x2F; // /
-	*(memoria + 2049 + 64) = 0x5E; // ^
-	*(memoria + 2563 + 64) = 0x23; // #
-
+int main(int argc, char** argv){
+//=====================Iniciar Cache=====================
+	unsigned char memoria[_64KB];
 	cache_t cache;
 	cache_crear(&cache, memoria);
-
-
-	unsigned char dato1 = read_byte(&cache, 15 + 64);
-	unsigned char dato2 = read_byte(&cache, 520+ 64);
-	unsigned char dato3 = read_byte(&cache, 1025+ 64);
-	unsigned char dato4 = read_byte(&cache, 1541+ 64);
-
-	printf("%s : %d\n", cache.conjuntos[1][0].espacio, cache.conjuntos[1][0].orden);
-	printf("%s : %d\n", cache.conjuntos[1][1].espacio, cache.conjuntos[1][1].orden);
-	printf("%s : %d\n", cache.conjuntos[1][2].espacio, cache.conjuntos[1][2].orden);
-	printf("%s : %d\n", cache.conjuntos[1][3].espacio, cache.conjuntos[1][3].orden);
-
-	printf("%x\n", dato1);
-	printf("%x\n", dato2);
-	printf("%x\n", dato3);
-	printf("%x\n", dato4);
-
-	unsigned char dato6 = read_byte(&cache, 2563+ 64);
-
-	printf("%s : %d\n", cache.conjuntos[1][0].espacio, cache.conjuntos[1][0].orden);
-	printf("%s : %d\n", cache.conjuntos[1][1].espacio, cache.conjuntos[1][1].orden);
-	printf("%s : %d\n", cache.conjuntos[1][2].espacio, cache.conjuntos[1][2].orden);
-	printf("%s : %d\n", cache.conjuntos[1][3].espacio, cache.conjuntos[1][3].orden);
-
-	printf("%x\n", dato6);
-
+	init(&cache);
+//=========================Parse=========================
+	FILE* archivo = fopen(argv[1], "r");
+	if (!archivo){
+		printf("Error al abrir archivo\n");
+		return 0;
+	}
+	char com[MAX_COMANDO];
+	unsigned int dir = 0;
+	unsigned int dato = 0;
+	int i;
+	unsigned char c;
+	do{
+		i = fscanf(archivo, "%s %u, %u\n", com, &dir, &dato);
+		c = (unsigned char) dato;
+		if (strcmp(com, "FLUSH") == 0){
+			init(&cache);
+		} else if(strcmp(com, "R") == 0){
+			if (dir > _64KB){
+				printf(E_DIREC);
+				continue;
+			}
+			unsigned char res = read_byte(&cache, dir);
+			printf("Valor leido: %d\n", res);
+		} else if(strcmp(com, "W") == 0){
+			if (dato > MAX_CHAR){
+				printf(E_VALOR);
+				continue;
+			}
+			if (dir > _64KB){
+				printf(E_DIREC);
+				continue;
+			}
+			write_byte(&cache, dir, c);
+		} else if(strcmp(com, "MR") == 0){
+			float mr = get_miss_rate(&cache);
+			printf("%.6f\n", mr);
+		} else {
+			printf(E_COMANDO);
+		}
+	} while(!feof(archivo));
 	cache_destruir(&cache);
-
+	fclose(archivo);
 	return 0;
 }

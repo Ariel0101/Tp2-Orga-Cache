@@ -21,7 +21,7 @@ typedef struct Cache{
 } cache_t;
 
 
-void cache_crear(cache_t* c, char* memoria);
+void cache_crear(cache_t* c, unsigned char* memoria);
 /*
 Inicializa la memoria principal simulada en
 0, los bloques de la caché como inválidos y la tasa de misses a 0.
